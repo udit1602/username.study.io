@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ExamPrep — Study Hub | परीक्षा तैयारी</title>
+  <style>
+    :root{--bg:#ffffff;--text:#111;--card:#f7f7f8;--accent:#0b63d6}
+    [data-theme="dark"]{--bg:#0b0d10;--text:#e6eef8;--card:#121418;--accent:#58a6ff}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
+    header{background:linear-gradient(90deg,var(--card),transparent);padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:48px;height:48px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    nav a{margin:0 8px;text-decoration:none;color:var(--text);font-weight:600}
+    .container{max-width:1100px;margin:22px auto;padding:0 18px}
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.04)}
+    h1,h2{margin:6px 0}
+    .subjects{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    .subject{padding:10px 12px;border-radius:10px;background:rgba(0,0,0,0.04);cursor:pointer}
+    .quick-links{display:flex;flex-direction:column;gap:8px}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700}
+    .list{margin:10px 0;padding:0;list-style:none}
+    .list li{padding:6px 0;border-bottom:1px dashed rgba(0,0,0,0.06)}
+    footer{padding:20px;text-align:center;color:rgba(0,0,0,0.6)}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}.brand .hide-sm{display:none}}
+    .small{font-size:13px;color:rgba(0,0,0,0.6)}
+    /* Mini components */
+    .toggle{cursor:pointer;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);display:inline-flex;align-items:center}
+    .progress-list{display:flex;flex-direction:column;gap:8px}
+    .progress-item{display:flex;justify-content:space-between;align-items:center}
+    .mock-timer{display:flex;gap:8px;align-items:center}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">EP</div>
+      <div>
+        <div style="font-weight:800">ExamPrep — Study Hub</div>
+        <div class="small hide-sm">परीक्षा तैयारी • Notes • Quizzes</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="toggle" id="themeToggle">🌓</div>
+      <a class="btn" id="bookmarkPage">Bookmark</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <!-- Main column -->
+      <section>
+        <article class="card">
+          <h1>Homepage (होमपेज)</h1>
+          <p><strong>Purpose:</strong> A compact study hub for exam preparation — concise notes, topic-wise explanations, practice MCQs, mock tests with timer, and progress tracking. <span class="small">(परीक्षा तैयारी, नोट्स, क्विज़)</span></p>
+
+          <h2>Featured Subjects (मुख्य विषय)</h2>
+          <div class="subjects" id="subjects">
+            <div class="subject">General Hindi — सामान्य हिंदी</div>
+            <div class="subject">General English — सामान्य अंग्रेज़ी</div>
+            <div class="subject">Rajasthani Culture — राजस्थानी संस्कृति</div>
+            <div class="subject">General Knowledge — सामान्य ज्ञान</div>
+            <div class="subject">Logical Reasoning — तार्किक तर्कशक्ति</div>
+            <div class="subject">Numerical Ability — संख्यात्मक योग्यता</div>
+          </div>
+
+          <h2 style="margin-top:18px">Quick Links to Study Material</h2>
+          <div class="quick-links">
+            <a href="#study" class="small">➤ Notes (PDF + Online View)</a>
+            <a href="#practice" class="small">➤ Practice Zone: MCQs & Mock Tests</a>
+            <a href="#plan" class="small">➤ Daily Study Plan</a>
+            <a href="#resources" class="small">➤ Resources & Downloads</a>
+          </div>
+        </article>
+
+        <article id="study" class="card" style="margin-top:16px">
+          <h2>Study Material (अध्ययन सामग्री)</h2>
+          <ul class="list">
+            <li>Notes (PDF + Online View) — <a href="#" class="small">Sample PDF</a></li>
+            <li>Topic-wise Explanations</li>
+            <li>Key Points / Formulas</li>
+            <li>Previous Year Papers</li>
+          </ul>
+        </article>
+
+        <article id="practice" class="card" style="margin-top:16px">
+          <h2>Practice Zone (अभ्यास अनुभाग)</h2>
+          <p class="small">MCQs, Mock Tests (with timer), Flashcards</p>
+
+          <div style="margin-top:12px">
+            <button class="btn" id="startMock">Start Mock Test (5 min)</button>
+            <div style="margin-top:10px" id="mockArea" hidden>
+              <div class="card" style="padding:12px">
+                <div class="mock-timer">Time left: <span id="timeLeft">05:00</span></div>
+                <div style="margin-top:10px">
+                  <strong>Q1.</strong> Which is the capital of Rajasthan?
+                  <div><label><input type="radio" name="q1"> Jaipur</label></div>
+                  <div><label><input type="radio" name="q1"> Jodhpur</label></div>
+                  <div><label><input type="radio" name="q1"> Udaipur</label></div>
+                </div>
+                <div style="margin-top:10px"><button class="btn" id="finishMock">Finish</button></div>
+              </div>
+            </div>
+          </div>
+
+          <h3 style="margin-top:14px">Flashcards</h3>
+          <p class="small">Vocabulary, Facts, Formulas — flip to study quickly.</p>
+        </article>
+
+        <article id="resources" class="card" style="margin-top:16px">
+          <h2>Resources (संसाधन)</h2>
+          <ul class="list">
+            <li>Downloadable PDFs — <a href="#">Sample Notes (PDF)</a></li>
+            <li>Recommended Books & YouTube Playlists</li>
+            <li>Useful Links</li>
+          </ul>
+        </article>
+
+        <article id="plan" class="card" style="margin-top:16px">
+          <h2>Daily Study Plan (दैनिक अध्ययन योजना)</h2>
+          <p class="small">Choose a day-wise schedule and track progress.</p>
+          <div class="progress-list" style="margin-top:8px">
+            <div class="progress-item"><span>Day 1: Hindi Grammar</span><input type="checkbox" data-day="1"></div>
+            <div class="progress-item"><span>Day 2: English Vocabulary</span><input type="checkbox" data-day="2"></div>
+            <div class="progress-item"><span>Day 3: Reasoning Practice</span><input type="checkbox" data-day="3"></div>
+          </div>
+        </article>
+
+        <article class="card" style="margin-top:16px">
+          <h2>Help & Discussion (सहायता और चर्चा)</h2>
+          <p class="small">FAQs • Ask a Question • Forum (optional chatbot)</p>
+        </article>
+
+        <article class="card" style="margin-top:16px">
+          <h2>Motivation & Tips (प्रेरणा और सुझाव)</h2>
+          <ul class="list">
+            <li>Exam strategies</li>
+            <li>Time management tips</li>
+            <li>Success stories</li>
+          </ul>
+        </article>
+
+      </section>
+
+      <!-- Sidebar -->
+      <aside>
+        <div class="card">
+          <h3>Quick Tools</h3>
+          <p class="small">Dark/Light mode, Bookmark, Personalized dashboard (local)</p>
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(0,0,0,0.06)">
+          <h4>Extras</h4>
+          <ul class="list">
+            <li>Dark / Light mode</li>
+            <li>Bookmark / Save topics</li>
+            <li>Personalized dashboard with progress</li>
+          </ul>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Top Downloads</h3>
+          <ol>
+            <li><a href="#">Hindi Grammar - Notes (PDF)</a></li>
+            <li><a href="#">English Vocab - Flashcards</a></li>
+            <li><a href="#">Previous Papers Pack</a></li>
+          </ol>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Progress Tracker</h3>
+          <div id="progressStatus" class="small">No progress yet.</div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer>
+    © ExamPrep — Study Hub • Built for quick upload to hosting or embedding in Google Sites.
+  </footer>
+
+  <script>
+    // Theme toggle + persistence
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const storedTheme = localStorage.getItem('exam_theme');
+    if(storedTheme === 'dark') document.documentElement.setAttribute('data-theme','dark');
+    themeToggle.addEventListener('click',()=>{
+      const cur = document.documentElement.getAttribute('data-theme');
+      if(cur === 'dark'){
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('exam_theme','light');
+      } else {
+        document.documentElement.setAttribute('data-theme','dark');
+        localStorage.setItem('exam_theme','dark');
+      }
+    });
+
+    // Bookmark (using localStorage)
+    document.getElementById('bookmarkPage').addEventListener('click',()=>{
+      const key = 'exam_bookmarks';
+      const v = JSON.parse(localStorage.getItem(key)||'[]');
+      v.push({title:document.title,url:location.href,at:new Date().toISOString()});
+      localStorage.setItem(key,JSON.stringify(v));
+      alert('Saved to bookmarks (local).');
+    });
+
+    // Simple mock test timer (5 minutes default)
+    const startBtn = document.getElementById('startMock');
+    const mockArea = document.getElementById('mockArea');
+    const timeLeft = document.getElementById('timeLeft');
+    let timerId=null;let seconds=300;
+    startBtn.addEventListener('click',()=>{
+      seconds=300; mockArea.hidden=false; updateTime();
+      if(timerId) clearInterval(timerId);
+      timerId=setInterval(()=>{ seconds--; if(seconds<=0){ finishMock(true);} updateTime(); },1000);
+    });
+    document.getElementById('finishMock').addEventListener('click',()=> finishMock(false));
+    function updateTime(){ const m=Math.floor(seconds/60).toString().padStart(2,'0'); const s=(seconds%60).toString().padStart(2,'0'); timeLeft.textContent=`${m}:${s}` }
+    function finishMock(auto=false){ clearInterval(timerId); alert(auto? 'Time up! Test submitted.' : 'Test submitted.'); mockArea.hidden=true; }
+
+    // Progress tracker persistence
+    document.querySelectorAll('input[type=checkbox][data-day]').forEach(cb=>{
+      const k='day_'+cb.dataset.day; cb.checked = localStorage.getItem(k) === 'true';
+      cb.addEventListener('change',()=>{ localStorage.setItem(k, cb.checked); updateProgressDisplay(); });
+    });
+    function updateProgressDisplay(){
+      const total = document.querySelectorAll('input[type=checkbox][data-day]').length;
+      const done = document.querySelectorAll('input[type=checkbox][data-day]:checked').length;
+      document.getElementById('progressStatus').textContent = `${done} / ${total} tasks completed`;
+    }
+    updateProgressDisplay();
+  </script>
+</body>
+</html>
